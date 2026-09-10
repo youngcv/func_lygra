@@ -1,0 +1,26 @@
+robot: sharpa
+visualize: True
+batch_size_outer: ${object.generation.batch_size_outer}
+batch_size_inner: ${object.generation.batch_size_inner}
+accept_less_contact: False
+n_sample_point: 4096 # Num of Sampled Object Mesh Points
+ik_finetune_iter: 10
+zo_lr_sigma: 5
+contact_score_threshold: ${object.generation.contact_score_threshold}
+cf_accel: 'lbvhs2'
+object_pose_sampling_strategy: 'specific'
+object_point_sampling_strategy: 'manual_weighted'
+object_point_filter: False
+sample_pose_failure_resample_threshold: 20 # Rebuild contact field and resample object points after this many consecutive sample-pose failures. Set <=0 to disable.
+target_n_result: ${object.generation.target_n_result}
+save_dir: 'cache/grasp'
+
+defaults:
+  - _self_
+  - object: knife
+
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .

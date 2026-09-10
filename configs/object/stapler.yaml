@@ -1,0 +1,63 @@
+asset:
+  root: "assets/object"
+  category: 'stapler'
+  input_dir: ${.root}/${.category}
+  instance_id: '000'
+  scale_factor: 1.0
+
+generation:
+  batch_size_outer: 512
+  batch_size_inner: 512
+  contact_score_threshold: 0.8
+  target_n_result: 1000
+
+digits:
+  sharpa:
+    n_contact: 5
+    movable_links: ["left_thumb_DP", "left_index_DP", "left_middle_DP", "left_ring_DP", "left_pinky_DP"]
+    specific_links: ["left_thumb_DP"]
+    static_links: ["left_hand_C_MC"]
+    movable_disabled_normal: [[[0.0, -1.0, 0.0], 0]]
+    static_allowed_normal: [[1.0, 0.0, 0.0], 0.25]
+    override_disabled_normal: {}
+    additional_filter_rules:
+      - link_name_contains: ["thumb"]
+        centroid_min:
+          x: 0.02
+          y: -0.002
+      - link_name_contains: ["index", "ring", "middle", "pinky"]
+        centroid_min:
+          x: 0.01
+          z: -0.005
+          y: -0.002
+        centroid_max:
+          x: 0.02
+          z: 0.005
+  wuji:
+    n_contact: 5
+    movable_links: ["finger1_tip_link", "finger2_tip_link", "finger3_tip_link", "finger4_tip_link", "finger5_tip_link"]
+    specific_links: ["finger1_tip_link"]
+    static_links: ["palm_link"]
+    movable_disabled_normal: [[[-1.0, 0.0, 0.0], 0.499999]]
+    static_allowed_normal: [[1.0, 0.0, 0.0], 0.25]
+    override_disabled_normal: {}
+
+parts:
+  sample_weights:
+    green: 0.2
+    red: 0.6
+    blue: 0.2
+  centroid_sample_scale:
+    green: 0.5
+    blue: 0.8
+  robot_rules:
+    sharpa:
+      thumb_touchable_area: ['green']
+      fingers_touchable_area: ['blue']
+      thumb_forbidden_area: ['blue', 'red']
+      fingers_forbidden_area: ['green', 'red']
+    wuji:
+      thumb_touchable_area: ['green']
+      fingers_touchable_area: ['blue']
+      thumb_forbidden_area: ['blue', 'red']
+      fingers_forbidden_area: ['green', 'red']
